@@ -44,8 +44,11 @@ namespace ServiceModelEx
       }
       void ApplyConfiguration(string configurationName)
       {
-         Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
-         ServiceModelSectionGroup sectionGroup = ServiceModelSectionGroup.GetSectionGroup(config);
+          //Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+          #region Workaround for finding config within a web app
+          Configuration config = ConfigurationManager.OpenMappedExeConfiguration(new ExeConfigurationFileMap() { ExeConfigFilename = AppDomain.CurrentDomain.SetupInformation.ConfigurationFile }, ConfigurationUserLevel.None);
+          #endregion
+          ServiceModelSectionGroup sectionGroup = ServiceModelSectionGroup.GetSectionGroup(config);
 
          BindingsSection bindings = sectionGroup.Bindings;
 

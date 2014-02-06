@@ -228,8 +228,28 @@ namespace ServiceModelEx
 
          foreach(string address in addresses)
          {
-            Binding binding = GetBindingFromAddress(address);
-            ChannelFactory<T> factory = new ChannelFactory<T>(binding,new EndpointAddress(address));
+             
+
+             /* BEGIN JM update - 2013-12-06 */
+             ChannelFactory<T> factory;
+             var binding = GetBindingFromAddress(address);
+             if (binding is WSHttpBinding)
+             {
+                 // HACK to fix SPPI error when communicating to WS services - a better option would be to base this off of an optional Identity in the subscriber database
+                 var uri = new Uri(address);
+                 var identity = new UpnEndpointIdentity("internal@bridgepoint");
+                 var endpointAddress = new EndpointAddress(uri, identity);
+                 factory = new ChannelFactory<T>(binding, endpointAddress);
+             }
+             else
+             {
+                 factory = new ChannelFactory<T>(binding, new EndpointAddress(address));
+             }
+             /* JM update - 2013-12-06 - original code *
+             Binding binding = GetBindingFromAddress(address);
+             ChannelFactory<T> factory = new ChannelFactory<T>(binding,new EndpointAddress(address));
+             */
+             /* END JM update - 2013-12-06 */
             T proxy = factory.CreateChannel();
             subscribers.Add(proxy);
          }

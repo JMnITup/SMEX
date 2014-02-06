@@ -31,7 +31,7 @@ namespace ServiceModelEx
          }
          catch
          {
-            binding = new NetNamedPipeContextBinding();
+             binding = new NetNamedPipeContextBinding();
          }
 
          binding.TransactionFlow = true;

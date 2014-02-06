@@ -51,7 +51,7 @@ namespace ServiceModelEx
          }
          if(assemblies.Count == 0)
          {
-            throw new InvalidOperationException("Could not find dynamic assembly");
+            //throw new InvalidOperationException("Could not find dynamic assembly");
          }
          return assemblies.ToArray();
       }

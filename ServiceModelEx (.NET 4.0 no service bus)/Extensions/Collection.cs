@@ -294,7 +294,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="collection"></param>
-      /// <param name="match"></param>
       /// <returns></returns>
       public static bool Any<T>(IEnumerable<T> collection)
       {
@@ -312,7 +311,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="collection"></param>
-      /// <param name="match"></param>
       /// <returns></returns>
       public static T Single<T>(IEnumerable<T> collection)
       {
@@ -364,7 +362,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="collection"></param>
-      /// <param name="match"></param>
       /// <returns></returns>
       public static T SingleOrDefault<T>(IEnumerable<T> collection)
       {
@@ -405,7 +402,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="collection"></param>
-      /// <param name="match"></param>
       /// <returns></returns>
       public static T First<T>(IEnumerable<T> collection)
       {
@@ -425,7 +421,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="collection"></param>
-      /// <param name="match"></param>
       /// <returns></returns>
       public static T FirstOrDefault<T>(IEnumerable<T> collection)
       {
@@ -491,7 +486,6 @@ namespace ServiceModelEx
       /// Finds all the items in iterator1 that are not in collection2
       /// </summary>
       /// <typeparam name="T"></typeparam>
-      /// <param name="iterator1"></param>
       /// <param name="collection2"></param>
       /// <returns></returns>
       public static IEnumerable<T> Complement<T>(IEnumerable<T> collection1,IEnumerable<T> collection2) where T : IEquatable<T>
@@ -619,7 +613,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="collection"></param>
-      /// <param name="match"></param>
       /// <returns></returns>
       public static T LastOrDefault<T>(IEnumerable<T> collection)
       {
@@ -638,7 +631,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <param name="collection"></param>
-      /// <param name="match"></param>
       /// <returns></returns>
       public static T Last<T>(IEnumerable<T> collection)
       {
@@ -873,7 +865,6 @@ namespace ServiceModelEx
       /// Converts the items in collection to an array
       /// </summary>
       /// <typeparam name="T"></typeparam>
-      /// <param name="iterator"></param>
       /// <param name="count">Initial size for optimization</param>
       /// <returns></returns>
       public static T[] ToArray<T>(IEnumerable<T> collection,int count)
@@ -919,14 +910,15 @@ namespace ServiceModelEx
          int count = Count(collection);
          return ToArray(collection,converter,count);
       }
-      /// <summary>
-      /// Converts the items in collection to an array  of type U according to the converter
-      /// </summary>
-      /// <typeparam name="T"></typeparam>
-      /// <param name="iterator"></param>
-      /// <param name="count">Initial size for optimization</param>
-      /// <returns></returns>
-      static U[] ToArray<T,U>(IEnumerable<T> collection,Converter<T,U> converter,int count)
+
+       /// <summary>
+       /// Converts the items in collection to an array  of type U according to the converter
+       /// </summary>
+       /// <typeparam name="T"></typeparam>
+       /// <typeparam name="U"></typeparam>
+       /// <param name="count">Initial size for optimization</param>
+       /// <returns></returns>
+       static U[] ToArray<T,U>(IEnumerable<T> collection,Converter<T,U> converter,int count)
       {
          List<U> list = new List<U>(count);
          foreach(T t in collection)
@@ -959,7 +951,6 @@ namespace ServiceModelEx
       /// Returns all the items in collection that satisfy the predicate match
       /// </summary>
       /// <typeparam name="T"></typeparam>
-      /// <param name="iterator"></param>
       /// <param name="match"></param>
       /// <returns></returns>
       public static bool All<T>(IEnumerable<T> collection,Predicate<T> match)
@@ -981,13 +972,15 @@ namespace ServiceModelEx
          }
          return true;
       }
-      /// <summary>
-      /// Converts all the items in the object-based collection of the type T to a new array of type U according to converter
-      /// </summary>
-      /// <typeparam name="T"></typeparam>
-      /// <param name="collection"></param>
-      /// <returns></returns>
-      public static U[] UnsafeToArray<T,U>(IEnumerable collection,Converter<T,U> converter)
+
+       /// <summary>
+       /// Converts all the items in the object-based collection of the type T to a new array of type U according to converter
+       /// </summary>
+       /// <typeparam name="T"></typeparam>
+       /// <typeparam name="U"></typeparam>
+       /// <param name="collection"></param>
+       /// <returns></returns>
+       public static U[] UnsafeToArray<T,U>(IEnumerable collection,Converter<T,U> converter)
       {
          if(collection == null)
          {
@@ -1001,13 +994,14 @@ namespace ServiceModelEx
          return ToArray(newCollection);
       }
 
-      /// <summary>
-      /// Converts all the items in the object-based iterator of the type T to a new array of type U according to converter
-      /// </summary>
-      /// <typeparam name="T"></typeparam>
-      /// <param name="iterator"></param>
-      /// <returns></returns>
-      public static U[] UnsafeToArray<T,U>(IEnumerator iterator,Converter<T,U> converter)
+       /// <summary>
+       /// Converts all the items in the object-based iterator of the type T to a new array of type U according to converter
+       /// </summary>
+       /// <typeparam name="T"></typeparam>
+       /// <typeparam name="U"></typeparam>
+       /// <param name="iterator"></param>
+       /// <returns></returns>
+       public static U[] UnsafeToArray<T,U>(IEnumerator iterator,Converter<T,U> converter)
       {
          if(iterator == null)
          {
@@ -1085,7 +1079,6 @@ namespace ServiceModelEx
       /// </summary>
       /// <typeparam name="T"></typeparam>
       /// <typeparam name="U"></typeparam>
-      /// <param name="collection"></param>
       /// <param name="converter"></param>
       /// <returns></returns>
       public static IEnumerator<U> UnsafeConvertAll<T,U>(IEnumerator iterator,Converter<T,U> converter)
